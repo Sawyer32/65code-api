@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma.service.js";
+import { CreateProjectDto } from "./dto/create-project.dto.js";
 
 @Injectable()
 export class ProjectsService {
@@ -16,5 +17,17 @@ export class ProjectsService {
     return this.prisma.project.findUnique({
       where: { slug },
     });
+  }
+
+  async create(dto: CreateProjectDto) {
+    return this.prisma.project.create({
+      data: {
+        title: dto.title,
+        slug: dto.slug,
+        description: dto.description,
+        imageUrl: dto.imageUrl,
+        published: dto.published ?? true,
+      }
+    })
   }
 }

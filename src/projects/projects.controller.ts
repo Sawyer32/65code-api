@@ -1,5 +1,7 @@
-import { Controller, Get, NotFoundException, Param } from "@nestjs/common";
+import { Body, Controller, Get, NotFoundException, Param, Post, UseGuards } from "@nestjs/common";
 import { ProjectsService } from "./projects.service.js";
+import { JwtAuthGuard } from "../auth/jwt-auth.guard.js";
+import { CreateProjectDto } from "./dto/create-project.dto.js";
 
 @Controller('projects')
 export class ProjectsController {
@@ -17,5 +19,11 @@ export class ProjectsController {
       throw new NotFoundException('Project not found');
     }
     return project;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  create(@Body() createProjectDto: CreateProjectDto) {
+    return this.projectsService.create(createProjectDto);
   }
 }
