@@ -13,3 +13,26 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Project {
+  id          String  @id @default(uuid())
+  title       String
+  slug        String  @unique
+  description String
+  tags        String[]
+  imageUrl    String?
+  projectUrl  String?
+  githubUrl   String?
+  published   Boolean @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model ContactSubmission {
+  id          String  @id @default(uuid())
+  name        String
+  email       String
+  message     String
+  status      String  @default("NEW")
+  createdAt   DateTime  @default(now())
+}
